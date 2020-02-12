@@ -8,7 +8,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="question1.Controller">
    <children>
-      <Button fx:id="button" layoutX="268.0" layoutY="355.0" mnemonicParsing="false" onAction="#randomize" text="Button" />
+      <Button fx:id="button" layoutX="268.0" layoutY="355.0" mnemonicParsing="false" onAction="#randomize" text="Randomize" />
       <ImageView fx:id="image1" fitHeight="277.0" fitWidth="170.0" layoutX="33.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/backofcard.jpg" />
