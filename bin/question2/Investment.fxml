@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="483.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="question2.Controller">
+   <children>
+   	  <TextField fx:id="text1" layoutX="262.0" layoutY="30.0" text="10000" />
+   	  <TextField fx:id="text2" layoutX="262.0" layoutY="93.0" text="3" />
+   	  <TextField fx:id="text3" layoutX="262.0" layoutY="155.0" text="3.25" />
+   	  <TextField fx:id="text4" editable="false" layoutX="262.0" layoutY="221.0" />
+      <Button fx:id="button" layoutX="355.0" layoutY="282.0" mnemonicParsing="false" onAction="#calculateInvestment" text="Calculate" />
+      <Label alignment="CENTER_RIGHT" layoutX="39.0" layoutY="35.0" prefHeight="21.0" prefWidth="203.0" text="Investment Amount" />
+      <Label alignment="CENTER_RIGHT" layoutX="56.0" layoutY="98.0" prefHeight="21.0" prefWidth="186.0" text="Years" />
+      <Label alignment="CENTER_RIGHT" layoutX="65.0" layoutY="160.0" prefHeight="21.0" prefWidth="177.0" text="Annual Interest Rate" />
+      <Label alignment="CENTER_RIGHT" layoutX="87.0" layoutY="226.0" prefHeight="21.0" prefWidth="155.0" text="Future Value" />
+   </children>
+</Pane>
