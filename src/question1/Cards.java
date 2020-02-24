@@ -1,20 +1,48 @@
 package question1;
 
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
-public class Controller {
-
-	@FXML Button button;
-	@FXML ImageView image1, image2, image3;
+public class Cards extends Application {
+	Button button;
+	ImageView image1, image2, image3;
 	
-	public Controller() {
-		button = new Button();
-		image1 = new ImageView();
-		image2 = new ImageView();
-		image3 = new ImageView();
+	public static void main(String[] args) {
+		launch(args);
+	}
+	
+	public void start(Stage window) {
+		VBox root = new VBox();
+		HBox cards = new HBox();
+		Scene scene = new Scene(root, 600, 320);
+		Image back = new Image(getClass().getResource("images/backofcard.jpg").toString());
+		image1 = new ImageView(back);
+		image1.setFitWidth(200); image1.setFitHeight(300);
+		image2 = new ImageView(back);
+		image2.setFitWidth(200); image2.setFitHeight(300);
+		image3 = new ImageView(back);
+		image3.setFitWidth(200); image3.setFitHeight(300);
+		button = new Button("Randomize");
+		button.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent arg0) {
+				randomize();
+			}
+		});
+		cards.getChildren().addAll(image1, image2, image3);
+		root.getChildren().addAll(cards, button);
+		window.setScene(scene);
+        window.setTitle("Random Cards");
+        window.setResizable(false);
+		window.show();
 		
 	}
 	
@@ -46,5 +74,4 @@ public class Controller {
 		r += ".png";
 		image3.setImage(new Image(getClass().getResource(r).toString()));
 	}
-	
 }
