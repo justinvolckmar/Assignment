@@ -15,51 +15,61 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * Created by: Justin Volckmar, Nathaniel Armogan 
+ * Creates an instance of a Histogram window which updates on the press of ENTER
+ * and displays the number of letters typed in a textfield (upper and lower together)
+ */
 public class Histogram extends Application {
 
 	public static void main(String[] args) {
-		launch(args);
+		launch(args); //launch the main window
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	/**
+	 * Start a new window using JavaFX
+	 * @param window - the main window being launched through the main application
+	 */
 	public void start(Stage window) throws Exception {
-		VBox root = new VBox();
-		HBox bottom = new HBox();
-		Scene scene = new Scene(root, 900, 400);
-		CategoryAxis x = new CategoryAxis();
+		VBox root = new VBox(); //create a new vbox
+		HBox bottom = new HBox(); //create a hbox for the bottom of the page
+		Scene scene = new Scene(root, 900, 400); //create the scene (vbox is main)
+		CategoryAxis x = new CategoryAxis(); //create x as a String axis and set the label to Letters
         x.setLabel("Letters");
-        NumberAxis y = new NumberAxis();
+        NumberAxis y = new NumberAxis(); //create y as a Number axis and set the label to Occurances
         y.setLabel("Occurances");
-        y.setMinorTickLength(1);
-        BarChart<String, Number> chart = new BarChart<>(x, y);
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        chart.setLegendVisible(false);
-        for (int i = 0 ; i < 26 ; i++) {
+        BarChart<String, Number> chart = new BarChart<>(x, y); //create the bar chart object with x and y
+        XYChart.Series<String, Number> series = new XYChart.Series<>(); //create a series in which to add data to
+        chart.setLegendVisible(false); //hide the legend
+        for (int i = 0 ; i < 26 ; i++) { //loop for every letter in the alphabet creating each data object with the value of 0
         	XYChart.Data<String, Number> data = new XYChart.Data<>(String.valueOf((char)(i+65)),0);
-        	series.getData().add(data);
+        	series.getData().add(data); //add each value to the series
         }
-        chart.getData().add(series);
-        Label label = new Label("Text: ");
+        chart.getData().add(series); //add the default series to the main chart
+        Label label = new Label("Text: "); //create the labels surrounding the field
         Label label2 = new Label(" (Press ENTER to update)");
-        TextField field = new TextField();
+        TextField field = new TextField(); //create the textfield and set a listener for ENTER key pressed while in the field
         field.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent e) {
 				if (e.getCode().equals(KeyCode.ENTER)) {
-					for (int i = 0 ; i < 26; i++) {
+					for (int i = 0 ; i < 26; i++) { //set all values back to 0
 						series.getData().get(i).setYValue(0);
 					}
 					char[] c = field.getText().toUpperCase().toCharArray();
-					for (int i = 0 ; i < c.length ; i++) {
+					for (int i = 0 ; i < c.length ; i++) { //loop through all characters in the field
 						int n = (int) (c[i])-65;
-						if (n >= 0 && n < 26) {
-							series.getData().get(n).setYValue((int)series.getData().get(n).getYValue()+1);
+						if (n >= 0 && n < 26) { //if the character at i is a letter, add it to the current total of that letter in the series
+							series.getData().get(n).setYValue( (int)(series.getData().get(n).getYValue())+1 );
 						}
 					}
 				}
 			}
-        });
+        });//end of listener
+        //add labels and field to the bottom
         bottom.getChildren().addAll(label, field, label2);
+        //add the chart then the bottom to the main window
         root.getChildren().addAll(chart, bottom);
+        //launch the window with the new scene
         window.setScene(scene);
         window.setTitle("Letter Occurances in a TextField");
         window.setResizable(false);
