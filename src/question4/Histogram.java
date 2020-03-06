@@ -1,5 +1,10 @@
 package question4;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -30,7 +35,7 @@ public class Histogram extends Application {
 	 * Start a new window using JavaFX
 	 * @param window - the main window being launched through the main application
 	 */
-	public void start(Stage window) throws Exception {
+	public void start(Stage window) throws Exception, FileNotFoundException {
 		VBox root = new VBox(); //create a new vbox
 		HBox bottom = new HBox(); //create a hbox for the bottom of the page
 		Scene scene = new Scene(root, 900, 400); //create the scene (vbox is main)
@@ -46,22 +51,30 @@ public class Histogram extends Application {
         	series.getData().add(data); //add each value to the series
         }
         chart.getData().add(series); //add the default series to the main chart
-        Label label = new Label("Text: "); //create the labels surrounding the field
+        Label label = new Label("Filename: "); //create the labels surrounding the field
         Label label2 = new Label(" (Press ENTER to update)");
-        TextField field = new TextField(); //create the textfield and set a listener for ENTER key pressed while in the field
+        TextField field = new TextField("file.txt"); //create the textfield and set a listener for ENTER key pressed while in the field
         field.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent e) {
 				if (e.getCode().equals(KeyCode.ENTER)) {
 					for (int i = 0 ; i < 26; i++) { //set all values back to 0
 						series.getData().get(i).setYValue(0);
 					}
-					char[] c = field.getText().toUpperCase().toCharArray();
-					for (int i = 0 ; i < c.length ; i++) { //loop through all characters in the field
-						int n = (int) (c[i])-65;
-						if (n >= 0 && n < 26) { //if the character at i is a letter, add it to the current total of that letter in the series
-							series.getData().get(n).setYValue( (int)(series.getData().get(n).getYValue())+1 );
+					String filename = field.getText();
+					String line;
+					BufferedReader reader;
+					try {
+						reader = new BufferedReader(new FileReader("src/question4/" + filename));
+						while ((line = reader.readLine()) != null) {
+							char[] c = line.toUpperCase().toCharArray();
+							for (int i = 0 ; i < c.length ; i++) { //loop through all characters in the field
+								int n = (int) (c[i])-65;
+								if (n >= 0 && n < 26) { //if the character at i is a letter, add it to the current total of that letter in the series
+									series.getData().get(n).setYValue( (int)(series.getData().get(n).getYValue())+1 );
+								}
+							}
 						}
-					}
+					} catch (IOException e1) { e1.printStackTrace(); }
 				}
 			}
         });//end of listener
